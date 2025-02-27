@@ -17,6 +17,7 @@
       margin: 0;
       padding: 0;
     }
+
     body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -27,6 +28,7 @@
       min-height: 100vh;
       padding: 20px;
     }
+
     /* Header */
     .header {
       text-align: center;
@@ -41,6 +43,7 @@
       font-size: 1rem;
       color: #555;
     }
+
     /* Card Container */
     .card {
       background: linear-gradient(135deg, #fffcdc 0%, #ffe8c6 100%);
@@ -66,6 +69,7 @@
       margin-bottom: 20px;
       color: #444;
     }
+
     /* Left section for sliders */
     .left-section {
       flex: 1 1 60%;
@@ -128,6 +132,7 @@
       color: #444;
       font-weight: 500;
     }
+
     /* Right section for circles */
     .right-section {
       flex: 0 0 180px;
@@ -153,6 +158,7 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       text-align: center;
     }
+
     /* Bottom message with fixed min-height */
     .card-message {
       width: 100%;
@@ -164,6 +170,7 @@
       border-top: 1px solid #ddd;
       min-height: 40px; /* Ensures stable space even if text changes */
     }
+
     /* Responsive */
     @media (max-width: 600px) {
       .card {
@@ -340,18 +347,17 @@
       const center = clampScore(raw);
       const lowerScore = clampScore(center - 1.5);
       const upperScore = clampScore(center + 1.5);
+
+      // Score Range
       const scoreRange = (lowerScore === upperScore)
         ? `${lowerScore}`
         : `${lowerScore}–${upperScore}`;
 
-      // Percentile
+      // Percentiles
       const lowerPercent = getPercentile(lowerScore, quantData);
       const upperPercent = getPercentile(upperScore, quantData);
-      const percentRange = (lowerPercent === upperPercent)
-        ? `${lowerPercent}%`
-        : `${lowerPercent}%–${upperPercent}%`;
 
-      // Update Score Circle
+      // Score Circle
       const quantScoreText = document.getElementById('quantScoreText');
       if (sec1Val === 0 && sec2Val === 0) {
         quantScoreText.textContent = 'Perfect?';
@@ -359,19 +365,28 @@
         quantScoreText.textContent = scoreRange;
       }
 
-      // Update Percent Circle
-      document.getElementById('quantPercentText').textContent = percentRange;
+      // Percent Circle
+      const quantPercentText = document.getElementById('quantPercentText');
+      if (lowerPercent === upperPercent) {
+        quantPercentText.textContent = `${lowerPercent}%`;
+      } else {
+        quantPercentText.textContent = `${lowerPercent}%–${upperPercent}%`;
+      }
 
-      // Update Bottom Message
+      // Inverted logic: how many made fewer mistakes
+      const fewerLow = 100 - upperPercent;
+      const fewerHigh = 100 - lowerPercent;
+
+      // Bottom Message
       const quantMessage = document.getElementById('quantMessage');
       if (sec1Val === 0 && sec2Val === 0) {
         quantMessage.textContent = '';
       } else if (lowerPercent === upperPercent) {
         quantMessage.textContent =
-          `Based on the inputs, understand that ${lowerPercent}% of test takers make fewer mistakes than this in Quant.`;
+          `Based on the inputs, understand that ${fewerLow}% of test takers make fewer mistakes than this in Quant.`;
       } else {
         quantMessage.textContent =
-          `Based on the inputs, understand that ${lowerPercent}% to ${upperPercent}% of test takers make fewer mistakes than this in Quant.`;
+          `Based on the inputs, understand that ${fewerLow}% to ${fewerHigh}% of test takers make fewer mistakes than this in Quant.`;
       }
     }
 
@@ -391,18 +406,17 @@
       const center = clampScore(raw);
       const lowerScore = clampScore(center - 1.5);
       const upperScore = clampScore(center + 1.5);
+
+      // Score Range
       const scoreRange = (lowerScore === upperScore)
         ? `${lowerScore}`
         : `${lowerScore}–${upperScore}`;
 
-      // Percentile
+      // Percentiles
       const lowerPercent = getPercentile(lowerScore, verbalData);
       const upperPercent = getPercentile(upperScore, verbalData);
-      const percentRange = (lowerPercent === upperPercent)
-        ? `${lowerPercent}%`
-        : `${lowerPercent}%–${upperPercent}%`;
 
-      // Update Score Circle
+      // Score Circle
       const verbScoreText = document.getElementById('verbScoreText');
       if (sec1Val === 0 && sec2Val === 0) {
         verbScoreText.textContent = 'Perfect?';
@@ -410,19 +424,28 @@
         verbScoreText.textContent = scoreRange;
       }
 
-      // Update Percent Circle
-      document.getElementById('verbPercentText').textContent = percentRange;
+      // Percent Circle
+      const verbPercentText = document.getElementById('verbPercentText');
+      if (lowerPercent === upperPercent) {
+        verbPercentText.textContent = `${lowerPercent}%`;
+      } else {
+        verbPercentText.textContent = `${lowerPercent}%–${upperPercent}%`;
+      }
 
-      // Update Bottom Message
+      // Inverted logic: how many made fewer mistakes
+      const fewerLow = 100 - upperPercent;
+      const fewerHigh = 100 - lowerPercent;
+
+      // Bottom Message
       const verbMessage = document.getElementById('verbMessage');
       if (sec1Val === 0 && sec2Val === 0) {
         verbMessage.textContent = '';
       } else if (lowerPercent === upperPercent) {
         verbMessage.textContent =
-          `Based on the inputs, understand that ${lowerPercent}% of test takers make fewer mistakes than this in Verbal.`;
+          `Based on the inputs, understand that ${fewerLow}% of test takers make fewer mistakes than this in Verbal.`;
       } else {
         verbMessage.textContent =
-          `Based on the inputs, understand that ${lowerPercent}% to ${upperPercent}% of test takers make fewer mistakes than this in Verbal.`;
+          `Based on the inputs, understand that ${fewerLow}% to ${fewerHigh}% of test takers make fewer mistakes than this in Verbal.`;
       }
     }
   </script>
