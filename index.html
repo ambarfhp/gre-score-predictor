@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GRE Score Predictor with Percentiles</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f7f7f7;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .section {
+      margin-bottom: 30px;
+      padding: 15px;
+      background: #fef9e7;
+      border: 1px solid #eee;
+      border-radius: 8px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .range-group {
+      margin: 10px 0;
+    }
+    .range-group label {
+      display: inline-block;
+      width: 220px;
+      font-weight: bold;
+    }
+    input[type=range] {
+      width: 100%;
+      margin-top: 5px;
+    }
+    .result {
+      font-weight: bold;
+      text-align: center;
+      margin-top: 15px;
+    }
+    .percentile {
+      color: #555;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>GRE Score Predictor with Percentiles</h1>
+  <div class="container">
+    <!-- Quantitative Section -->
+    <div class="section" id="quantSection">
+      <h2>Quantitative Reasoning</h2>
+      <div class="range-group">
+        <label for="quantSec1">Section 1 (0–12 incorrect):</label>
+        <input type="range" id="quantSec1" min="0" max="12" value="0" oninput="calculateQuant()">
+        <span id="quantSec1Val">0</span>
+      </div>
+      <div class="range-group">
+        <label for="quantSec2">Section 2 (0–15 incorrect):</label>
+        <input type="range" id="quantSec2" min="0" max="15" value="0" oninput="calculateQuant()">
+        <span id="quantSec2Val">0</span>
+      </div>
+      <p id="quantScoreRange" class="result">Waiting for input...</p>
+      <p id="quantPercentileRange" class="percentile"></p>
+    </div>
+
+    <!-- Verbal Section -->
+    <div class="section" id="verbalSection">
+      <h2>Verbal Reasoning</h2>
+      <div class="range-group">
+        <label for="verbSec1">Section 1 (0–12 incorrect):</label>
+        <input type="range" id="verbSec1" min="0" max="12" value="0" oninput="calculateVerbal()">
+        <span id="verbSec1Val">0</span>
+      </div>
+      <div class="range-group">
+        <label for="verbSec2">Section 2 (0–15 incorrect):</label>
+        <input type="range" id="verbSec2" min="0" max="15" value="0" oninput="calculateVerbal()">
+        <span id="verbSec2Val">0</span>
+      </div>
+      <p id="verbScoreRange" class="result">Waiting for input...</p>
+      <p id="verbPercentileRange" class="percentile"></p>
+    </div>
+  </div>
+
+  <script>
+    // Global objects to hold percentile data for each section
+    let quantData = [];
+    let verbalData = [];
+
+    // Fetch percentile data from separate JSON file
+    fetch('percentiles.json')
+      .then(response => response.json())
+      .then(data => {
+        // Expect data to have "quant" and "verbal" arrays
+        quantData = data.quant;
+        verbalData = data.verbal;
+      })
+      .catch(error => {
+        console.error('Error fetching percentile data:', error);
+      });
+
+    // Helper function: clamp score to [130, 170] and round
+    function clampScore(score) {
+      if (score < 130) return 130;
+      if (score > 170) return 170;
+      return Math.round(score);
+    }
+
+    // Helper function to look up percentile for a given score from an array
+    function getPercentile(score, dataArray) {
+      const clamped = clampScore(score);
+      const entry = dataArray.find(item => item.score === clamped);
+      return entry ? entry.percentile : 0;
+    }
+
+    // Calculate Quantitative estimated score range and percentile range
+    function calculateQuant() {
+      const sec1Val = parseFloat(document.getElementById('quantSec1').value);
+      const sec2Val = parseFloat(document.getElementById('quantSec2').value);
+      document.getElementById('quantSec1Val').textContent = sec1Val;
+      document.getElementById('quantSec2Val').textContent = sec2Val;
+
+      // Formula: raw = 170 - (Section1Incorrect * 2 + Section2Incorrect * 1.4)
+      const raw = 170 - (sec1Val * 2 + sec2Val * 1.4);
+      const center = clampScore(raw);
+      const lowerScore = clampScore(center - 1.5);
+      const upperScore = clampScore(center + 1.5);
+
+      document.getElementById('quantScoreRange').textContent =
+        `Estimated score range: ${lowerScore} to ${upperScore}`;
+
+      const lowerPercent = getPercentile(lowerScore, quantData);
+      const upperPercent = getPercentile(upperScore, quantData);
+
+      const percentileText = (lowerPercent === upperPercent)
+        ? `Approx. percentile: ${lowerPercent}%`
+        : `Approx. percentile range: ${lowerPercent}% to ${upperPercent}%`;
+
+      document.getElementById('quantPercentileRange').textContent = percentileText;
+    }
+
+    // Calculate Verbal estimated score range and percentile range
+    function calculateVerbal() {
+      const sec1Val = parseFloat(document.getElementById('verbSec1').value);
+      const sec2Val = parseFloat(document.getElementById('verbSec2').value);
+      document.getElementById('verbSec1Val').textContent = sec1Val;
+      document.getElementById('verbSec2Val').textContent = sec2Val;
+
+      // Formula: raw = 170 - (Section1Incorrect * 1.8 + Section2Incorrect * 1.05)
+      const raw = 170 - (sec1Val * 1.8 + sec2Val * 1.05);
+      const center = clampScore(raw);
+      const lowerScore = clampScore(center - 1.5);
+      const upperScore = clampScore(center + 1.5);
+
+      document.getElementById('verbScoreRange').textContent =
+        `Estimated score range: ${lowerScore} to ${upperScore}`;
+
+      const lowerPercent = getPercentile(lowerScore, verbalData);
+      const upperPercent = getPercentile(upperScore, verbalData);
+
+      const percentileText = (lowerPercent === upperPercent)
+        ? `Approx. percentile: ${lowerPercent}%`
+        : `Approx. percentile range: ${lowerPercent}% to ${upperPercent}%`;
+
+      document.getElementById('verbPercentileRange').textContent = percentileText;
+    }
+  </script>
+</body>
+</html>
