@@ -99,7 +99,7 @@
     let verbalData = [];
 
     // Fetch percentile data from separate JSON file
-    fetch('percentiles.json')
+    fetch('gre-percentiles.json')
       .then(response => response.json())
       .then(data => {
         // Expect data to have "quant" and "verbal" arrays
