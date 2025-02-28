@@ -35,15 +35,14 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       padding: 20px;
-      position: relative;
-      text-align: center; /* Ensures everything is center-aligned */
+      text-align: center;
     }
 
     /* Header */
     .header {
       display: flex;
-      flex-direction: column; /* Column so logo is above text */
-      align-items: center;    /* Center horizontally */
+      flex-direction: column; /* Logo above text */
+      align-items: center;
       margin-bottom: 20px;
     }
     .header-left {
@@ -54,7 +53,7 @@
     }
     .header-left img {
       max-width: 100px;
-      margin-bottom: 10px; /* Spacing between logo and title */
+      margin-bottom: 10px;
     }
     .header-left h1 {
       font-size: 2rem;
@@ -68,38 +67,35 @@
       font-weight: 600; /* Bold subtitle */
     }
 
-    /* Each GRE Section Card (Quant / Verbal) */
+    /* Cards */
     .card {
       background: #fdfdfd;
       border-radius: 8px;
       padding: 20px;
       margin-bottom: 20px;
       box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-      position: relative;
     }
     .card h2 {
       font-size: 1.3rem;
       font-weight: 500;
-      text-align: center;
-      margin-bottom: 8px;
       color: #444;
+      margin-bottom: 8px;
     }
-    .card .three-col-grid {
+    .three-col-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 150px; 
+      grid-template-columns: 1fr 1fr 150px;
       column-gap: 30px;
       align-items: start;
       justify-items: center;
     }
     .move-sliders-text {
-      text-align: center;
       font-size: 0.95rem;
       font-weight: 500;
       color: #777;
       margin-bottom: 15px;
     }
 
-    /* Vertical Slider Container */
+    /* Vertical Slider */
     .vertical-slider-container {
       display: flex;
       flex-direction: column;
@@ -109,29 +105,26 @@
     .vertical-slider-label {
       font-size: 1rem;
       color: #444;
-      font-weight: 600; /* Bold Section 1 / Section 2 */
+      font-weight: 600;
     }
     .vertical-slider-wrapper {
       position: relative;
-      width: 60px;   /* container for the track */
-      height: 200px; /* track length */
+      width: 60px;
+      height: 200px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
-    /* The vertical slider */
     .vertical-slider {
       -webkit-appearance: none;
       position: absolute;
-      width: 200px;  
-      height: 60px;  
+      width: 200px;
+      height: 60px;
       transform: rotate(-90deg);
-      transform-origin: 100px 30px; 
+      transform-origin: 100px 30px;
       outline: none;
       cursor: pointer;
     }
-    /* Thin track (4px) */
     .vertical-slider::-webkit-slider-runnable-track {
       background: #eee;
       width: 4px;
@@ -139,38 +132,34 @@
       border-radius: 2px;
       margin: 0 auto;
     }
-    /* Longer "stick" thumb (12x60) extends beyond track */
     .vertical-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 12px;  
-      height: 60px; 
+      width: 12px;
+      height: 60px;
       border-radius: 3px;
       background: #e63946;
       box-shadow: 0 0 4px rgba(0,0,0,0.2);
       transition: transform 0.2s ease;
-      margin-left: 0; /* no negative margin => extends beyond track */
+      margin-left: 0;
     }
     .vertical-slider::-webkit-slider-thumb:hover {
       transform: scale(1.05);
     }
-
-    /* Slider Value */
     .slider-value {
       font-weight: 600;
       color: #e63946;
       font-size: 1rem;
     }
 
-    /* Circle (score or percentile) */
+    /* Score & Percentile Circles */
     .circle-col {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px; 
+      gap: 20px;
       margin-top: 10px;
     }
     .circle-label {
-      text-align: center;
       font-size: 0.85rem;
       font-weight: 500;
       color: #444;
@@ -189,19 +178,15 @@
       font-weight: 600;
       font-size: 1rem;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      text-align: center;
       transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-      position: relative;
     }
     .circle:hover {
       transform: scale(1.05);
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    /* Bottom message with fixed min-height */
+    /* Bottom Message */
     .card-message {
-      width: 100%;
-      text-align: center;
       font-size: 0.9rem;
       color: #444;
       margin-top: 20px;
@@ -245,77 +230,51 @@
 <body>
 
   <div class="container">
-    <!-- Header row -->
+    <!-- Header -->
     <div class="header">
       <div class="header-left">
-        <!-- Logo on top -->
-        <img 
-          src="https://i.imghippo.com/files/yY9688io.PNG" 
-          alt="Logo" 
-          class="logo"
-        />
+        <img src="https://i.imghippo.com/files/yY9688io.PNG" alt="Logo" class="logo" />
         <h1>GRE Score Predictor</h1>
         <p>How many mistakes can you really afford to make?</p>
       </div>
     </div>
 
-    <!-- Tooltip for hover explanations -->
+    <!-- Tooltip -->
     <div id="tooltip" class="tooltip"></div>
 
     <!-- Quantitative Card -->
     <div class="card">
       <h2>Quantitative Reasoning</h2>
       <p class="move-sliders-text">Move the sliders to indicate how many questions you got wrong.</p>
-
       <div class="three-col-grid">
-        <!-- Column 1: Vertical Slider for Section 1 -->
+        <!-- Section 1 Slider -->
         <div class="vertical-slider-container">
           <div class="vertical-slider-label">Section 1</div>
           <div class="vertical-slider-wrapper">
-            <input 
-              type="range"
-              id="quantSec1"
-              class="vertical-slider"
-              min="0"
-              max="12"
-              value="0"
-              oninput="calculateQuant()"
-            />
+            <input type="range" id="quantSec1" class="vertical-slider" min="0" max="12" value="0" oninput="calculateQuant()" />
           </div>
           <div class="slider-value" id="quantSec1Val">0 mistakes</div>
         </div>
-
-        <!-- Column 2: Vertical Slider for Section 2 -->
+        <!-- Section 2 Slider -->
         <div class="vertical-slider-container">
           <div class="vertical-slider-label">Section 2</div>
           <div class="vertical-slider-wrapper">
-            <input 
-              type="range"
-              id="quantSec2"
-              class="vertical-slider"
-              min="0"
-              max="15"
-              value="0"
-              oninput="calculateQuant()"
-            />
+            <input type="range" id="quantSec2" class="vertical-slider" min="0" max="15" value="0" oninput="calculateQuant()" />
           </div>
           <div class="slider-value" id="quantSec2Val">0 mistakes</div>
         </div>
-
-        <!-- Column 3: Score + Percentile Circles stacked -->
+        <!-- Score & Percentile Circles -->
         <div class="circle-col">
-          <!-- Score Circle -->
           <div>
             <div class="circle-label">Scores</div>
             <div class="circle" id="quantScoreCircle">
               <div id="quantScoreText">Waiting</div>
             </div>
           </div>
-          <!-- Percent Circle -->
           <div>
             <div class="circle-label">%ile</div>
             <div class="circle" id="quantPercentCircle">
-              <div id="quantPercentText">Waiting</div> <!-- Start with "Waiting" -->
+              <div id="quantPercentText">Waiting</div>
             </div>
           </div>
         </div>
@@ -327,52 +286,31 @@
     <div class="card">
       <h2>Verbal Reasoning</h2>
       <p class="move-sliders-text">Move the sliders to indicate how many questions you got wrong.</p>
-
       <div class="three-col-grid">
-        <!-- Column 1: Vertical Slider for Section 1 -->
+        <!-- Section 1 Slider -->
         <div class="vertical-slider-container">
           <div class="vertical-slider-label">Section 1</div>
           <div class="vertical-slider-wrapper">
-            <input 
-              type="range"
-              id="verbSec1"
-              class="vertical-slider"
-              min="0"
-              max="12"
-              value="0"
-              oninput="calculateVerbal()"
-            />
+            <input type="range" id="verbSec1" class="vertical-slider" min="0" max="12" value="0" oninput="calculateVerbal()" />
           </div>
           <div class="slider-value" id="verbSec1Val">0 mistakes</div>
         </div>
-
-        <!-- Column 2: Vertical Slider for Section 2 -->
+        <!-- Section 2 Slider -->
         <div class="vertical-slider-container">
           <div class="vertical-slider-label">Section 2</div>
           <div class="vertical-slider-wrapper">
-            <input 
-              type="range"
-              id="verbSec2"
-              class="vertical-slider"
-              min="0"
-              max="15"
-              value="0"
-              oninput="calculateVerbal()"
-            />
+            <input type="range" id="verbSec2" class="vertical-slider" min="0" max="15" value="0" oninput="calculateVerbal()" />
           </div>
           <div class="slider-value" id="verbSec2Val">0 mistakes</div>
         </div>
-
-        <!-- Column 3: Score + Percentile Circles stacked -->
+        <!-- Score & Percentile Circles -->
         <div class="circle-col">
-          <!-- Score Circle -->
           <div>
             <div class="circle-label">Scores</div>
             <div class="circle" id="verbScoreCircle">
               <div id="verbScoreText">Waiting</div>
             </div>
           </div>
-          <!-- Percent Circle -->
           <div>
             <div class="circle-label">%ile</div>
             <div class="circle" id="verbPercentCircle">
@@ -389,16 +327,14 @@
     let quantData = [];
     let verbalData = [];
 
-    // Fetch percentile data (make sure gre-percentile.json is in the same directory)
+    // Fetch JSON data (ensure gre-percentile.json is available)
     fetch('gre-percentile.json')
       .then(response => response.json())
       .then(data => {
         quantData = data.quant;
         verbalData = data.verbal;
       })
-      .catch(error => {
-        console.error('Error fetching percentile data:', error);
-      });
+      .catch(error => console.error('Error fetching percentile data:', error));
 
     function clampScore(score) {
       if (score < 130) return 130;
@@ -412,7 +348,7 @@
       return entry ? entry.percentile : 0;
     }
 
-    // Update slider background to show "red fill" for mistakes
+    // Update slider fill (red gradient)
     function updateSliderFill(slider) {
       const val = parseInt(slider.value, 10);
       const max = parseInt(slider.max, 10);
@@ -423,122 +359,100 @@
     function calculateQuant() {
       const sec1 = document.getElementById('quantSec1');
       const sec2 = document.getElementById('quantSec2');
-
       updateSliderFill(sec1);
       updateSliderFill(sec2);
-
+      
       const sec1Val = parseInt(sec1.value, 10);
       const sec2Val = parseInt(sec2.value, 10);
-
-      // Update text for mistakes
       document.getElementById('quantSec1Val').textContent = `${sec1Val} mistakes`;
       document.getElementById('quantSec2Val').textContent = `${sec2Val} mistakes`;
 
-      // Simple formula for raw score
-      const raw = 170 - (sec1Val * 2 + sec2Val * 1.4);
-
-      // We'll create a small +/- range around the center
-      const center = clampScore(raw);
-      const lower = clampScore(center - 1.5);
-      const upper = clampScore(center + 1.5);
-
-      const lowerPct = getPercentile(lower, quantData);
-      const upperPct = getPercentile(upper, quantData);
-
       const scoreCircle = document.getElementById('quantScoreCircle');
-      const scoreText = document.getElementById('quantScoreText');
-      const pctCircle = document.getElementById('quantPercentCircle');
-      const pctText = document.getElementById('quantPercentText');
+      const scoreText   = document.getElementById('quantScoreText');
+      const pctCircle   = document.getElementById('quantPercentCircle');
+      const pctText     = document.getElementById('quantPercentText');
+      const quantMsg    = document.getElementById('quantMessage');
 
-      // Show updated values
-      scoreCircle.style.background = '#e63946';
-      pctCircle.style.background = '#e63946';
-
-      if (lower === upper) {
-        scoreText.textContent = `${lower}`;
-      } else {
-        scoreText.textContent = `${lower}–${upper}`;
-      }
-
-      if (lowerPct === upperPct) {
-        pctText.textContent = `${lowerPct}%`;
-      } else {
-        pctText.textContent = `${lowerPct}%–${upperPct}%`;
-      }
-
-      // Inverted logic for the "Based on..." message
-      const fewerLow = 100 - upperPct;
-      const fewerHigh = 100 - lowerPct;
-
-      const quantMsg = document.getElementById('quantMessage');
       if (sec1Val === 0 && sec2Val === 0) {
-        quantMsg.innerHTML = '';
-      } else if (lowerPct === upperPct) {
-        quantMsg.innerHTML = `<strong>Understand that ${fewerLow}% of test takers make fewer mistakes than the number of mistakes you entered in the Quant section.</strong>`;
+        // Perfect score: display 170 and fetch its percentile.
+        const perfectScore = 170;
+        scoreText.textContent = `${perfectScore}`;
+        const perfectPct = getPercentile(170, quantData);
+        pctText.textContent = `${perfectPct}%`;
+        scoreCircle.style.background = '#4CAF50';
+        pctCircle.style.background = '#4CAF50';
+        quantMsg.innerHTML = "";
       } else {
-        quantMsg.innerHTML = `<strong>Understand that ${fewerLow} to ${fewerHigh}% of test takers make fewer mistakes than the number of mistakes you entered in the Quant section.</strong>`;
+        // Calculate score range based on weighted mistakes.
+        const raw = 170 - (sec1Val * 2 + sec2Val * 1.4);
+        const center = clampScore(raw);
+        const lower = clampScore(center - 1.5);
+        const upper = clampScore(center + 1.5);
+        const lowerPct = getPercentile(lower, quantData);
+        const upperPct = getPercentile(upper, quantData);
+
+        scoreCircle.style.background = '#e63946';
+        pctCircle.style.background = '#e63946';
+        scoreText.textContent = (lower === upper) ? `${lower}` : `${lower}–${upper}`;
+        pctText.textContent = (lowerPct === upperPct) ? `${lowerPct}%` : `${lowerPct}%–${upperPct}%`;
+
+        const fewerLow  = 100 - upperPct;
+        const fewerHigh = 100 - lowerPct;
+        quantMsg.innerHTML = (lowerPct === upperPct) ?
+          `<strong style="color:#e63946;">Understand that ${fewerLow}% of test takers make fewer mistakes than the number of mistakes you entered in the Quant section.</strong>` :
+          `<strong style="color:#e63946;">Understand that ${fewerLow} to ${fewerHigh}% of test takers make fewer mistakes than the number of mistakes you entered in the Quant section.</strong>`;
       }
     }
 
     function calculateVerbal() {
       const sec1 = document.getElementById('verbSec1');
       const sec2 = document.getElementById('verbSec2');
-
       updateSliderFill(sec1);
       updateSliderFill(sec2);
-
+      
       const sec1Val = parseInt(sec1.value, 10);
       const sec2Val = parseInt(sec2.value, 10);
-
-      // Update text for mistakes
       document.getElementById('verbSec1Val').textContent = `${sec1Val} mistakes`;
       document.getElementById('verbSec2Val').textContent = `${sec2Val} mistakes`;
 
-      // Simple formula for raw score
-      const raw = 170 - (sec1Val * 1.8 + sec2Val * 1.05);
-
-      const center = clampScore(raw);
-      const lower = clampScore(center - 1.5);
-      const upper = clampScore(center + 1.5);
-
-      const lowerPct = getPercentile(lower, verbalData);
-      const upperPct = getPercentile(upper, verbalData);
-
       const scoreCircle = document.getElementById('verbScoreCircle');
-      const scoreText = document.getElementById('verbScoreText');
-      const pctCircle = document.getElementById('verbPercentCircle');
-      const pctText = document.getElementById('verbPercentText');
+      const scoreText   = document.getElementById('verbScoreText');
+      const pctCircle   = document.getElementById('verbPercentCircle');
+      const pctText     = document.getElementById('verbPercentText');
+      const verbMsg     = document.getElementById('verbMessage');
 
-      scoreCircle.style.background = '#e63946';
-      pctCircle.style.background = '#e63946';
-
-      if (lower === upper) {
-        scoreText.textContent = `${lower}`;
-      } else {
-        scoreText.textContent = `${lower}–${upper}`;
-      }
-
-      if (lowerPct === upperPct) {
-        pctText.textContent = `${lowerPct}%`;
-      } else {
-        pctText.textContent = `${lowerPct}%–${upperPct}%`;
-      }
-
-      // Inverted logic
-      const fewerLow = 100 - upperPct;
-      const fewerHigh = 100 - lowerPct;
-
-      const verbMsg = document.getElementById('verbMessage');
       if (sec1Val === 0 && sec2Val === 0) {
-        verbMsg.innerHTML = '';
-      } else if (lowerPct === upperPct) {
-        verbMsg.innerHTML = `<strong>Understand that ${fewerLow}% of test takers make fewer mistakes than the number of mistakes you entered in the Verbal section.</strong>`;
+        // Perfect score: display 170 and fetch its percentile.
+        const perfectScore = 170;
+        scoreText.textContent = `${perfectScore}`;
+        const perfectPct = getPercentile(170, verbalData);
+        pctText.textContent = `${perfectPct}%`;
+        scoreCircle.style.background = '#4CAF50';
+        pctCircle.style.background = '#4CAF50';
+        verbMsg.innerHTML = "";
       } else {
-        verbMsg.innerHTML = `<strong>Understand that ${fewerLow} to ${fewerHigh}% of test takers make fewer mistakes than the number of mistakes you entered in the Verbal section.</strong>`;
+        // Calculate score range based on weighted mistakes.
+        const raw = 170 - (sec1Val * 1.8 + sec2Val * 1.05);
+        const center = clampScore(raw);
+        const lower = clampScore(center - 1.5);
+        const upper = clampScore(center + 1.5);
+        const lowerPct = getPercentile(lower, verbalData);
+        const upperPct = getPercentile(upper, verbalData);
+
+        scoreCircle.style.background = '#e63946';
+        pctCircle.style.background = '#e63946';
+        scoreText.textContent = (lower === upper) ? `${lower}` : `${lower}–${upper}`;
+        pctText.textContent = (lowerPct === upperPct) ? `${lowerPct}%` : `${lowerPct}%–${upperPct}%`;
+
+        const fewerLow  = 100 - upperPct;
+        const fewerHigh = 100 - lowerPct;
+        verbMsg.innerHTML = (lowerPct === upperPct) ?
+          `<strong style="color:#e63946;">Understand that ${fewerLow}% of test takers make fewer mistakes than the number of mistakes you entered in the Verbal section.</strong>` :
+          `<strong style="color:#e63946;">Understand that ${fewerLow} to ${fewerHigh}% of test takers make fewer mistakes than the number of mistakes you entered in the Verbal section.</strong>`;
       }
     }
 
-    /* Tooltip logic */
+    /* Tooltip Logic */
     const tooltip = document.createElement('div');
     tooltip.className = 'tooltip';
     document.body.appendChild(tooltip);
@@ -557,23 +471,19 @@
       tooltip.style.top = (rect.top - 35) + 'px';
     }
 
-    // Score Circle Tooltips
+    // Tooltip Event Listeners
     document.getElementById('quantScoreCircle').addEventListener('mouseenter', (e) => {
       showTooltip(e, 'Estimated GRE score range');
     });
     document.getElementById('quantScoreCircle').addEventListener('mouseleave', hideTooltip);
-
     document.getElementById('verbScoreCircle').addEventListener('mouseenter', (e) => {
       showTooltip(e, 'Estimated GRE score range');
     });
     document.getElementById('verbScoreCircle').addEventListener('mouseleave', hideTooltip);
-
-    // Percent Circle Tooltips
     document.getElementById('quantPercentCircle').addEventListener('mouseenter', (e) => {
       showTooltip(e, 'Approx. percentile or range');
     });
     document.getElementById('quantPercentCircle').addEventListener('mouseleave', hideTooltip);
-
     document.getElementById('verbPercentCircle').addEventListener('mouseenter', (e) => {
       showTooltip(e, 'Approx. percentile or range');
     });
