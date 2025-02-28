@@ -19,7 +19,7 @@
     }
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background: linear-gradient(135deg, #f2f8fc 0%, #e3eef7 100%);
       color: #333;
       display: flex;
       justify-content: center;
@@ -27,82 +27,79 @@
       padding: 20px;
     }
 
-    /* Container for everything */
+    /* Outer Container */
     .container {
       width: 100%;
-      max-width: 700px;
+      max-width: 900px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      position: relative;
+      text-align: center; /* Ensures everything is center-aligned */
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      flex-direction: column; /* Column so logo is above text */
+      align-items: center;    /* Center horizontally */
+      margin-bottom: 20px;
+    }
+    .header-left {
       display: flex;
       flex-direction: column;
       align-items: center;
-      position: relative;
-    }
-
-    /* Header "card" */
-    .header-card {
-      background: #ffffff;
-      border-radius: 8px;
-      width: 100%;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-      padding: 20px;
       text-align: center;
     }
-    .header-card .logo {
-      max-width: 80px; /* Adjust as needed */
-      margin-bottom: 10px;
+    .header-left img {
+      max-width: 100px;
+      margin-bottom: 10px; /* Spacing between logo and title */
     }
-    .header-card h1 {
-      font-size: 1.8rem;
+    .header-left h1 {
+      font-size: 2rem;
       font-weight: 600;
       color: #333;
       margin-bottom: 8px;
     }
-    .header-card p {
+    .header-left p {
       font-size: 1rem;
       color: #555;
-      font-weight: 600; /* Bold the subtitle */
+      font-weight: 600; /* Bold subtitle */
     }
 
-    /* The main card for each GRE section */
+    /* Each GRE Section Card (Quant / Verbal) */
     .card {
-      border-radius: 10px;
-      width: 100%;
+      background: #fdfdfd;
+      border-radius: 8px;
       padding: 20px;
       margin-bottom: 20px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
       position: relative;
-      min-height: 320px;
     }
     .card h2 {
       font-size: 1.3rem;
       font-weight: 500;
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
       color: #444;
     }
-
-    /* Color-coding for the cards */
-    .quant-card {
-      background: linear-gradient(135deg, #e0ffd6 0%, #f3ffe8 100%);
-    }
-    .verbal-card {
-      background: linear-gradient(135deg, #d6f0ff 0%, #e8f9ff 100%);
-    }
-
-    /* 3 columns:
-       1 => vertical slider for Section 1
-       2 => vertical slider for Section 2
-       3 => stacked circles (score + percentile)
-    */
-    .three-col-grid {
+    .card .three-col-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 150px; 
       column-gap: 30px;
       align-items: start;
       justify-items: center;
     }
+    .move-sliders-text {
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #777;
+      margin-bottom: 15px;
+    }
 
-    /* Vertical slider container */
+    /* Vertical Slider Container */
     .vertical-slider-container {
       display: flex;
       flex-direction: column;
@@ -110,20 +107,20 @@
       gap: 10px;
     }
     .vertical-slider-label {
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: #444;
-      text-align: center;
-      line-height: 1.2;
+      font-weight: 600; /* Bold Section 1 / Section 2 */
     }
     .vertical-slider-wrapper {
       position: relative;
-      width: 60px;  
-      height: 200px; 
+      width: 60px;   /* container for the track */
+      height: 200px; /* track length */
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    /* The slider itself */
+
+    /* The vertical slider */
     .vertical-slider {
       -webkit-appearance: none;
       position: absolute;
@@ -134,7 +131,7 @@
       outline: none;
       cursor: pointer;
     }
-    /* Thin track, 4px wide */
+    /* Thin track (4px) */
     .vertical-slider::-webkit-slider-runnable-track {
       background: #eee;
       width: 4px;
@@ -142,22 +139,22 @@
       border-radius: 2px;
       margin: 0 auto;
     }
-    /* "Stick" thumb: 12px wide, 50px tall, extends beyond track */
+    /* Longer "stick" thumb (12x60) extends beyond track */
     .vertical-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 12px;  
-      height: 50px; 
+      height: 60px; 
       border-radius: 3px;
       background: #e63946;
       box-shadow: 0 0 4px rgba(0,0,0,0.2);
       transition: transform 0.2s ease;
-      /* No negative margin => extends beyond track on both sides */
-      margin-left: 0; 
+      margin-left: 0; /* no negative margin => extends beyond track */
     }
     .vertical-slider::-webkit-slider-thumb:hover {
       transform: scale(1.05);
     }
 
+    /* Slider Value */
     .slider-value {
       font-weight: 600;
       color: #e63946;
@@ -239,29 +236,41 @@
       .circle-col {
         margin-top: 15px;
       }
+      .header-left h1 {
+        font-size: 1.6rem;
+      }
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <!-- Card for the header and subtitle -->
-    <div class="header-card">
-      <!-- Example logo -->
-      <img src="https://i.ibb.co/Z1hgN1T/logo.png" alt="Logo" class="logo" />
-      <h1>GRE Score Predictor</h1>
-      <p><strong>Move the sliders to indicate how many questions you got wrong in each section.</strong></p>
+    <!-- Header row -->
+    <div class="header">
+      <div class="header-left">
+        <!-- Logo on top -->
+        <img 
+          src="https://i.imghippo.com/files/yY9688io.PNG" 
+          alt="Logo" 
+          class="logo"
+        />
+        <h1>GRE Score Predictor</h1>
+        <p>How many mistakes can you really afford to make?</p>
+      </div>
     </div>
 
-    <!-- Tooltip Element -->
+    <!-- Tooltip for hover explanations -->
     <div id="tooltip" class="tooltip"></div>
 
     <!-- Quantitative Card -->
-    <div class="card quant-card">
+    <div class="card">
       <h2>Quantitative Reasoning</h2>
+      <p class="move-sliders-text">Move the sliders to indicate how many questions you got wrong.</p>
+
       <div class="three-col-grid">
         <!-- Column 1: Vertical Slider for Section 1 -->
         <div class="vertical-slider-container">
+          <div class="vertical-slider-label">Section 1</div>
           <div class="vertical-slider-wrapper">
             <input 
               type="range"
@@ -274,11 +283,11 @@
             />
           </div>
           <div class="slider-value" id="quantSec1Val">0 mistakes</div>
-          <div class="vertical-slider-label">Section 1</div>
         </div>
 
         <!-- Column 2: Vertical Slider for Section 2 -->
         <div class="vertical-slider-container">
+          <div class="vertical-slider-label">Section 2</div>
           <div class="vertical-slider-wrapper">
             <input 
               type="range"
@@ -291,7 +300,6 @@
             />
           </div>
           <div class="slider-value" id="quantSec2Val">0 mistakes</div>
-          <div class="vertical-slider-label">Section 2</div>
         </div>
 
         <!-- Column 3: Score + Percentile Circles stacked -->
@@ -307,7 +315,7 @@
           <div>
             <div class="circle-label">%ile</div>
             <div class="circle" id="quantPercentCircle">
-              <div id="quantPercentText">–</div>
+              <div id="quantPercentText">Waiting</div> <!-- Start with "Waiting" -->
             </div>
           </div>
         </div>
@@ -316,11 +324,14 @@
     </div>
 
     <!-- Verbal Card -->
-    <div class="card verbal-card">
+    <div class="card">
       <h2>Verbal Reasoning</h2>
+      <p class="move-sliders-text">Move the sliders to indicate how many questions you got wrong.</p>
+
       <div class="three-col-grid">
         <!-- Column 1: Vertical Slider for Section 1 -->
         <div class="vertical-slider-container">
+          <div class="vertical-slider-label">Section 1</div>
           <div class="vertical-slider-wrapper">
             <input 
               type="range"
@@ -333,11 +344,11 @@
             />
           </div>
           <div class="slider-value" id="verbSec1Val">0 mistakes</div>
-          <div class="vertical-slider-label">Section 1</div>
         </div>
 
         <!-- Column 2: Vertical Slider for Section 2 -->
         <div class="vertical-slider-container">
+          <div class="vertical-slider-label">Section 2</div>
           <div class="vertical-slider-wrapper">
             <input 
               type="range"
@@ -350,7 +361,6 @@
             />
           </div>
           <div class="slider-value" id="verbSec2Val">0 mistakes</div>
-          <div class="vertical-slider-label">Section 2</div>
         </div>
 
         <!-- Column 3: Score + Percentile Circles stacked -->
@@ -366,7 +376,7 @@
           <div>
             <div class="circle-label">%ile</div>
             <div class="circle" id="verbPercentCircle">
-              <div id="verbPercentText">–</div>
+              <div id="verbPercentText">Waiting</div>
             </div>
           </div>
         </div>
@@ -376,12 +386,10 @@
   </div>
 
   <script>
-    /* ============================
-       Global Data & Fetch
-    ============================ */
     let quantData = [];
     let verbalData = [];
 
+    // Fetch percentile data (make sure gre-percentile.json is in the same directory)
     fetch('gre-percentile.json')
       .then(response => response.json())
       .then(data => {
@@ -404,178 +412,133 @@
       return entry ? entry.percentile : 0;
     }
 
-    /* 
-       Fill the slider track with red proportionally 
-       as the slider moves up (since more mistakes).
-       We'll do this in JS for demonstration.
-    */
+    // Update slider background to show "red fill" for mistakes
     function updateSliderFill(slider) {
       const val = parseInt(slider.value, 10);
       const max = parseInt(slider.max, 10);
       const percent = (val / max) * 100;
-      // For a vertical slider (rotated), a left-to-right fill in code 
-      // appears bottom-to-top visually.
-      slider.style.background = 
-        `linear-gradient(to right, #e63946 ${percent}%, #eee ${percent}%)`;
+      slider.style.background = `linear-gradient(to right, #e63946 ${percent}%, #eee ${percent}%)`;
     }
 
-    /* ============================
-       Quant Calculation
-    ============================ */
     function calculateQuant() {
-      const sec1Slider = document.getElementById('quantSec1');
-      const sec2Slider = document.getElementById('quantSec2');
+      const sec1 = document.getElementById('quantSec1');
+      const sec2 = document.getElementById('quantSec2');
 
-      // Update slider fill
-      updateSliderFill(sec1Slider);
-      updateSliderFill(sec2Slider);
+      updateSliderFill(sec1);
+      updateSliderFill(sec2);
 
-      const sec1Val = parseInt(sec1Slider.value, 10);
-      const sec2Val = parseInt(sec2Slider.value, 10);
+      const sec1Val = parseInt(sec1.value, 10);
+      const sec2Val = parseInt(sec2.value, 10);
 
-      // Append "mistakes"
+      // Update text for mistakes
       document.getElementById('quantSec1Val').textContent = `${sec1Val} mistakes`;
       document.getElementById('quantSec2Val').textContent = `${sec2Val} mistakes`;
 
-      // Score Calculation
+      // Simple formula for raw score
       const raw = 170 - (sec1Val * 2 + sec2Val * 1.4);
+
+      // We'll create a small +/- range around the center
       const center = clampScore(raw);
-      const lowerScore = clampScore(center - 1.5);
-      const upperScore = clampScore(center + 1.5);
+      const lower = clampScore(center - 1.5);
+      const upper = clampScore(center + 1.5);
 
-      // Score Range
-      const scoreRange = (lowerScore === upperScore)
-        ? `${lowerScore}`
-        : `${lowerScore}–${upperScore}`;
-
-      // Percentiles
-      const lowerPercent = getPercentile(lowerScore, quantData);
-      const upperPercent = getPercentile(upperScore, quantData);
+      const lowerPct = getPercentile(lower, quantData);
+      const upperPct = getPercentile(upper, quantData);
 
       const scoreCircle = document.getElementById('quantScoreCircle');
       const scoreText = document.getElementById('quantScoreText');
-      const percentCircle = document.getElementById('quantPercentCircle');
-      const percentText = document.getElementById('quantPercentText');
+      const pctCircle = document.getElementById('quantPercentCircle');
+      const pctText = document.getElementById('quantPercentText');
 
-      // If zero mistakes => Perfect 👌 & 100%ile with green circles
-      if (sec1Val === 0 && sec2Val === 0) {
-        scoreCircle.style.background = '#4CAF50';
-        scoreText.textContent = 'Perfect 👌';
-        percentCircle.style.background = '#4CAF50';
-        percentText.textContent = '100%ile';
+      // Show updated values
+      scoreCircle.style.background = '#e63946';
+      pctCircle.style.background = '#e63946';
+
+      if (lower === upper) {
+        scoreText.textContent = `${lower}`;
       } else {
-        // Otherwise, revert to red circles
-        scoreCircle.style.background = '#e63946';
-        percentCircle.style.background = '#e63946';
-
-        // Score circle text
-        scoreText.textContent = scoreRange;
-
-        // Percent circle text
-        if (lowerPercent === upperPercent) {
-          percentText.textContent = `${lowerPercent}%`;
-        } else {
-          percentText.textContent = `${lowerPercent}%–${upperPercent}%`;
-        }
+        scoreText.textContent = `${lower}–${upper}`;
       }
 
-      // Inverted logic: how many made fewer mistakes
-      const fewerLow = 100 - upperPercent;
-      const fewerHigh = 100 - lowerPercent;
-
-      // Bottom Message
-      const quantMessage = document.getElementById('quantMessage');
-      if (sec1Val === 0 && sec2Val === 0) {
-        quantMessage.textContent = '';
-      } else if (lowerPercent === upperPercent) {
-        quantMessage.textContent =
-          `Based on the inputs, understand that ${fewerLow}% of test takers make fewer mistakes than this in Quant.`;
+      if (lowerPct === upperPct) {
+        pctText.textContent = `${lowerPct}%`;
       } else {
-        quantMessage.textContent =
-          `Based on the inputs, understand that ${fewerLow}% to ${fewerHigh}% of test takers make fewer mistakes than this in Quant.`;
+        pctText.textContent = `${lowerPct}%–${upperPct}%`;
+      }
+
+      // Inverted logic for the "Based on..." message
+      const fewerLow = 100 - upperPct;
+      const fewerHigh = 100 - lowerPct;
+
+      const quantMsg = document.getElementById('quantMessage');
+      if (sec1Val === 0 && sec2Val === 0) {
+        quantMsg.innerHTML = '';
+      } else if (lowerPct === upperPct) {
+        quantMsg.innerHTML = `<strong>Based on the inputs, understand that ${fewerLow}% of test takers make fewer mistakes than this in Quant.</strong>`;
+      } else {
+        quantMsg.innerHTML = `<strong>Based on the inputs, understand that ${fewerLow}% to ${fewerHigh}% of test takers make fewer mistakes than this in Quant.</strong>`;
       }
     }
 
-    /* ============================
-       Verbal Calculation
-    ============================ */
     function calculateVerbal() {
-      const sec1Slider = document.getElementById('verbSec1');
-      const sec2Slider = document.getElementById('verbSec2');
+      const sec1 = document.getElementById('verbSec1');
+      const sec2 = document.getElementById('verbSec2');
 
-      // Update slider fill
-      updateSliderFill(sec1Slider);
-      updateSliderFill(sec2Slider);
+      updateSliderFill(sec1);
+      updateSliderFill(sec2);
 
-      const sec1Val = parseInt(sec1Slider.value, 10);
-      const sec2Val = parseInt(sec2Slider.value, 10);
+      const sec1Val = parseInt(sec1.value, 10);
+      const sec2Val = parseInt(sec2.value, 10);
 
-      // Append "mistakes"
+      // Update text for mistakes
       document.getElementById('verbSec1Val').textContent = `${sec1Val} mistakes`;
       document.getElementById('verbSec2Val').textContent = `${sec2Val} mistakes`;
 
-      // Score Calculation
+      // Simple formula for raw score
       const raw = 170 - (sec1Val * 1.8 + sec2Val * 1.05);
+
       const center = clampScore(raw);
-      const lowerScore = clampScore(center - 1.5);
-      const upperScore = clampScore(center + 1.5);
+      const lower = clampScore(center - 1.5);
+      const upper = clampScore(center + 1.5);
 
-      // Score Range
-      const scoreRange = (lowerScore === upperScore)
-        ? `${lowerScore}`
-        : `${lowerScore}–${upperScore}`;
-
-      // Percentiles
-      const lowerPercent = getPercentile(lowerScore, verbalData);
-      const upperPercent = getPercentile(upperScore, verbalData);
+      const lowerPct = getPercentile(lower, verbalData);
+      const upperPct = getPercentile(upper, verbalData);
 
       const scoreCircle = document.getElementById('verbScoreCircle');
       const scoreText = document.getElementById('verbScoreText');
-      const percentCircle = document.getElementById('verbPercentCircle');
-      const percentText = document.getElementById('verbPercentText');
+      const pctCircle = document.getElementById('verbPercentCircle');
+      const pctText = document.getElementById('verbPercentText');
 
-      // If zero mistakes => Perfect 👌 & 100%ile with green circles
-      if (sec1Val === 0 && sec2Val === 0) {
-        scoreCircle.style.background = '#4CAF50';
-        scoreText.textContent = 'Perfect 👌';
-        percentCircle.style.background = '#4CAF50';
-        percentText.textContent = '100%ile';
+      scoreCircle.style.background = '#e63946';
+      pctCircle.style.background = '#e63946';
+
+      if (lower === upper) {
+        scoreText.textContent = `${lower}`;
       } else {
-        // Otherwise, revert to red circles
-        scoreCircle.style.background = '#e63946';
-        percentCircle.style.background = '#e63946';
-
-        // Score circle text
-        scoreText.textContent = scoreRange;
-
-        // Percent circle text
-        if (lowerPercent === upperPercent) {
-          percentText.textContent = `${lowerPercent}%`;
-        } else {
-          percentText.textContent = `${lowerPercent}%–${upperPercent}%`;
-        }
+        scoreText.textContent = `${lower}–${upper}`;
       }
 
-      // Inverted logic: how many made fewer mistakes
-      const fewerLow = 100 - upperPercent;
-      const fewerHigh = 100 - lowerPercent;
-
-      // Bottom Message
-      const verbMessage = document.getElementById('verbMessage');
-      if (sec1Val === 0 && sec2Val === 0) {
-        verbMessage.textContent = '';
-      } else if (lowerPercent === upperPercent) {
-        verbMessage.textContent =
-          `Based on the inputs, understand that ${fewerLow}% of test takers make fewer mistakes than this in Verbal.`;
+      if (lowerPct === upperPct) {
+        pctText.textContent = `${lowerPct}%`;
       } else {
-        verbMessage.textContent =
-          `Based on the inputs, understand that ${fewerLow}% to ${fewerHigh}% of test takers make fewer mistakes than this in Verbal.`;
+        pctText.textContent = `${lowerPct}%–${upperPct}%`;
+      }
+
+      // Inverted logic
+      const fewerLow = 100 - upperPct;
+      const fewerHigh = 100 - lowerPct;
+
+      const verbMsg = document.getElementById('verbMessage');
+      if (sec1Val === 0 && sec2Val === 0) {
+        verbMsg.innerHTML = '';
+      } else if (lowerPct === upperPct) {
+        verbMsg.innerHTML = `<strong>Based on the inputs, understand that ${fewerLow}% of test takers make fewer mistakes than this in Verbal.</strong>`;
+      } else {
+        verbMsg.innerHTML = `<strong>Based on the inputs, understand that ${fewerLow}% to ${fewerHigh}% of test takers make fewer mistakes than this in Verbal.</strong>`;
       }
     }
 
-    /* ============================
-       Tooltip (Optional)
-    ============================ */
+    /* Tooltip logic */
     const tooltip = document.createElement('div');
     tooltip.className = 'tooltip';
     document.body.appendChild(tooltip);
